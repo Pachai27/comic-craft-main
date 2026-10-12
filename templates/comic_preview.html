@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ comic.title }} — ComicCraft</title>
+</head>
+<body>
+  <main>
+    <h1>{{ comic.title }}</h1>
+    <dl>
+      <dt>Character</dt><dd>{{ comic.character }}</dd>
+      <dt>Setting</dt><dd>{{ comic.setting }}</dd>
+      <dt>Tone</dt><dd>{{ comic.tone }}</dd>
+      <dt>Art style</dt><dd>{{ comic.art_style }}</dd>
+    </dl>
+
+    {% for panel in comic.panels %}
+    <section>
+      <h2>Panel {{ panel.panel_number }}: {{ panel.title }}</h2>
+      {% if panel.image_path and panel.image_path.startswith('static/') %}
+      <img src="{{ url_for('static', path=panel.image_path[7:]) }}" alt="{{ panel.title }}" />
+      {% elif panel.image_path %}
+      <img src="{{ panel.image_path }}" alt="{{ panel.title }}" />
+      {% endif %}
+      <p><strong>Narration:</strong> {{ panel.narration }}</p>
+      <p><strong>Dialogue:</strong> {{ panel.dialogue }}</p>
+    </section>
+    {% endfor %}
+
+    <form method="post" action="/export">
+      <input type="hidden" name="comic_id" value="{{ comic_id or '' }}" />
+      <button type="submit">Export PDF</button>
+    </form>
+
+    <p><a href="/">Create another comic</a></p>
+  </main>
+</body>
+</html>

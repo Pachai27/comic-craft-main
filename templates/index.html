@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComicCraft</title>
+</head>
+<body>
+  <main>
+    <h1>ComicCraft</h1>
+    <p>A web-based AI comic generator. Describe your story and generate a 5-panel comic.</p>
+
+    {% if error %}
+    <p role="alert"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+
+    <form method="post" action="/generate">
+      <div>
+        <label for="prompt">Story prompt</label>
+        <textarea id="prompt" name="prompt" rows="4" required placeholder="A brave explorer discovers a floating city...">{{ prompt or '' }}</textarea>
+      </div>
+
+      <div>
+        <label for="character">Main character name</label>
+        <input type="text" id="character" name="character" placeholder="Nova" value="{{ character or '' }}" />
+      </div>
+
+      <div>
+        <label for="setting">Setting</label>
+        <input type="text" id="setting" name="setting" placeholder="Floating city above the clouds" value="{{ setting or '' }}" />
+      </div>
+
+      <div>
+        <label for="tone">Tone</label>
+        <input type="text" id="tone" name="tone" placeholder="Funny, adventurous, mysterious..." value="{{ tone or '' }}" />
+      </div>
+
+      <div>
+        <label for="art_style">Art style</label>
+        <input type="text" id="art_style" name="art_style" placeholder="Cartoon, manga, watercolor..." value="{{ art_style or '' }}" />
+      </div>
+
+      <button type="submit">Generate Comic</button>
+    </form>
+  </main>
+</body>
+</html>
